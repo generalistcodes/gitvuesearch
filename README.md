@@ -1,4 +1,4 @@
-# hello-world
+# Github Repository Search using vue+typescript
 
 ## Project setup
 ```
