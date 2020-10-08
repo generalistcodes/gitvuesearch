@@ -12,7 +12,7 @@
         </div>
 
         <p class="sort-box"  v-if="query">
-          <b>Sort {{query}} by : </b>
+          <b>Sort <small class="small-label">{{query}}</small> by : </b>
           <button class="white-btn" @click="sortBy('-stargazers_count')">Highest stars</button>
           <button class="white-btn" @click="sortBy('stargazers_count')">Lowest stars</button>
           <button class="white-btn" @click="sortBy('-updated_at')">Latest</button>
@@ -113,6 +113,8 @@ export default class GitSearch extends Vue {
   --description-color: #707070;
   --tag-bg-color: #F1F8FF;
   --tag-txt-color: #0366D6;
+  --just-white: #ffffff;
+  --border-color: #EFF2F4;
 }
 
 h3 {
@@ -132,7 +134,7 @@ li {
 
 .input-text{
     padding: 10px;
-    border: 1px solid #fff;
+    border: 1px solid var(--just-white);
     width: 45%;
     box-shadow: 0px 7px 5px -3px rgb(0 0 0 / 0%), 0px 4px 10px 1px rgba(0,0,0,.14), 0px 4px 10px 2px rgb(255 255 255 / 0%);
 }
@@ -176,7 +178,7 @@ a{
 }
 
 a:hover{
-  background:#fff;
+  background:var(--just-white);
   color:#333;
   
 }
@@ -214,7 +216,7 @@ a.repo-name{
 }
 
 .result-item {
-    border: 1px solid #EFF2F4;
+    border: 1px solid var(--border-color);
     margin-bottom: 10px;
     border-radius: 5px;
     -webkit-order: 0;
@@ -250,6 +252,26 @@ a.repo-name{
     border-radius: 5px;
     box-shadow: 0px 7px 5px -3px rgb(0 0 0 / 0%), 0px 4px 10px 1px rgba(0,0,0,.14), 0px 4px 10px 2px rgb(255 255 255 / 0%);
     margin-right: 10px;
+    border: 2px solid var(--just-white);
+}
+
+.white-btn:focus{
+    border: 2px solid var(--tag-txt-color);
+    outline: none;
+}
+
+.small-label {
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 18px;
+    border: 1px solid transparent;
+    border-radius: 2em;
+    padding: 0 10px;
+    line-height: 22px;
+    color: var(--tag-txt-color);
+    white-space: nowrap;
+    background-color: #f1f8ff;
 }
 
 </style>
