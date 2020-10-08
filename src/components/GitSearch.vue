@@ -2,11 +2,13 @@
   <div class="gitsearch">
 
         <div class="text-center">
+          
           <input type="text" placeholder="Search github repository." class="input-text" v-model="query" v-on:keyup="getRepositoryItems">
         </div>
 
+
         <div v-if="loading" class="loading">
-            Updating list...
+           Searching... {{query}}
         </div>
 
 
@@ -38,8 +40,7 @@ import moment from 'moment';
 
 @Component
 export default class GitSearch extends Vue {
-  @Prop() private msg!: string;
-  query:string=""
+  @Prop() query!: string;
   loading: boolean = false
   gitResults = [];
 
