@@ -25,7 +25,7 @@
               <div class="text-center">
                   
                   <span class="blk txt-left">
-                   <a class="repo-name" href="#"> {{item.full_name}} </a>
+                   <a class="repo-name" :href="item.owner.html_url"> {{item.full_name}} </a>
                    <small>Updated {{timeago(item.updated_at)}}</small>
                   </span>
                   <span>⭐ {{item.stargazers_count}}</span>
