@@ -10,6 +10,12 @@ yarn install
 yarn serve
 ```
 
+### Test runner
+```
+yarn jest
+```
+
+
 ### Compiles and minifies for production
 ```
 yarn build
