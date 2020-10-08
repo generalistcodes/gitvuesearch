@@ -2,18 +2,24 @@
   <div class="gitsearch">
 
         <div class="text-center">
-          
           <input type="text" placeholder="Search github repository." class="input-text" v-model="query" v-on:keyup="getRepositoryItems">
         </div>
 
+        <br>
 
         <div v-if="loading" class="loading">
-           Searching... {{query}}
+           Searching... 
         </div>
 
-
+        <p class="sort-box"  v-if="query">
+          <b>Sort {{query}} by : </b>
+          <button class="white-btn" @click="sortBy('-stargazers_count')">Highest stars</button>
+          <button class="white-btn" @click="sortBy('stargazers_count')">Lowest stars</button>
+          <button class="white-btn" @click="sortBy('-updated_at')">Latest</button>
+          <button class="white-btn" @click="sortBy('updated_at')">Oldest</button>
+        </p>
         <ul v-if="gitResults" class="result">
-          <li v-for="item in gitResults" :key="item" class="result-item">
+          <li v-for="item in gitResults" :key="item+ Math.random()" class="result-item">
             <div class="box text-center git-result">
               <img class="avatar" v-bind:src="item.owner.avatar_url" height="50" width="50">
               <div class="text-center">
@@ -34,23 +40,56 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator';
 import gitService from '../services/gitsearch.service';
 import moment from 'moment';
+import { sortBy } from '../utils/sort';
+
 
 @Component
 export default class GitSearch extends Vue {
-  @Prop() query!: string;
-  loading: boolean = false
-  gitResults = [];
+  // @Prop() 
+  private loading: boolean = false
+  private gitResults = [];
+  public query: any = "";
+  // public sortName: string = 'stars'
 
   getRepositoryItems() { 
     this.clear()
+    const term = this.query
     this.loading = true
-    return gitService.getRepo(this.query)
+    return gitService.getRepo(term)
                       .then(response => (this.gitResults = response.data.items))
                       .catch((e)=> console.log("Error" + e))
                       .finally(() => this.loading = false);
+  }
+
+  byStars(a: any, b: any) {
+      if (a.stargazers_count > b.stargazers_count)
+        return -1;
+      if (a.stargazers_count < b.stargazers_count)
+        return 1;
+      return 0;
+  }
+
+  byLatest(a: any, b: any) {
+    //updated_at
+      if (a.updated_at > b.updated_at || a.stargazers_count > b.stargazers_count)
+        return -1;
+      if (a.updated_at < b.updated_at || a.stargazers_count < b.stargazers_count)
+        return 1;
+      return 0;
+  }
+
+  /*
+    sorting add `-` for asc/desc
+    eg: -stargazers_count -> 9999-0
+    w/out `-`:  stargazers_count ->0-9999
+  */
+  
+  sortBy(sortName: string) {
+    this.gitResults = this.gitResults.sort(sortBy(sortName))
+    return this.gitResults
   }
 
   timeago(timestamp: any) {
@@ -58,8 +97,12 @@ export default class GitSearch extends Vue {
   }
 
   public clear() {
-    this.gitResults = [];
+    return this.gitResults = [];
   } 
+
+  public testthis() {
+    return true;
+  }
 }
 </script>
 
@@ -197,6 +240,16 @@ a.repo-name{
 
 .loading {
     padding: 10px;
+}
+
+.white-btn {
+    background: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0px 7px 5px -3px rgb(0 0 0 / 0%), 0px 4px 10px 1px rgba(0,0,0,.14), 0px 4px 10px 2px rgb(255 255 255 / 0%);
+    margin-right: 10px;
 }
 
 </style>

@@ -4,22 +4,20 @@ import GitSearch from '@/components/GitSearch.vue';
 
 describe('InputSearch', () => {
 
-    test("Pass query value to the input", () =>{
-        const query = 'Angular';
-        const wrapper = shallowMount(GitSearch, {
-          propsData: { query },
-        });
-        expect(wrapper.text()).toMatch(query);
-        expect(wrapper.html()).toMatchSnapshot()
+    test('Testing Method', () => {
+       
+        const wrapper = mount(GitSearch)
+        expect(wrapper.vm.testthis).toBeTruthy()
+
+        console.log("how:", wrapper.vm.testthis)
+        
+      })
+
+    test('returns query result', ()=>{
+        const wrapper = mount(GitSearch)
+        expect(wrapper.vm.getRepositoryItems).toBeTruthy()
     })
 
-    
-    // test("Pass query value to the input", () =>{
-    //     const wrapper = mount(GitSearch, {
-    //         propsData: {
-    //             query: 'angular'
-    //         }
-    //     })
-    //     expect(wrapper.html()).toMatchSnapshot()
-    // })
+
 });
+
