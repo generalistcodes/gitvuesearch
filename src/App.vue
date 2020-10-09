@@ -2,7 +2,7 @@
   <div id="app">
     <img alt="Git logo" src="./assets/logo.svg">
     <div class="text-center">
-      <input type="text" placeholder="Search github repository." class="input-text" v-model="reponame" v-on:keyup.enter="getList">
+      <input type="text" placeholder="Search github repository and press enter." class="input-text" v-model="reponame" v-on:keyup.enter="getList">
     </div>
     <br>
     <div v-if="listLoading && reponame" class="loading">
@@ -11,6 +11,7 @@
     <br>
     <div class="sort-box"  v-if="reponame">
       <b>Sort <small class="small-label">{{reponame}}</small> by : </b>
+      <button class="white-btn" @click="sortBy('name')">Alphabetical</button>
       <button class="white-btn" @click="sortBy('-stargazers_count')">Highest stars</button>
       <button class="white-btn" @click="sortBy('stargazers_count')">Lowest stars</button>
       <button class="white-btn" @click="sortBy('-updated_at')">Latest</button>
@@ -36,6 +37,16 @@ import Pagination from '@/components/Pagination.vue';
 import gitService from '@/api/github';
 import { sortBy } from '@/utils/sort';
 
+/* 
+@TODO
+On click of a repository, show full details of the repository.
+
+Add sorting options based on alphabetical order, number of stars and by latest
+commit.
+
+Include functionality to favorite/mark repositories using state management (Store
+it on the client side.
+*/
 @Component({
   components: {
     GitDisplay,
