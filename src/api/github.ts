@@ -11,4 +11,7 @@ export default {
       const query: any = pagination
       return axios.get(`${config.url}${reponame}`+"&order=desc&per_page="+`${query.limit}`+"&page="+`${query.page}`, {headers: { Authorization: `Token ${config.token}` }});
     },
+    details(full_name: any) {
+      return axios.get(`${config.url_detail}${full_name}`, {headers: { Authorization: `Token ${config.token}` }});
+    },
   };

@@ -1,53 +1,71 @@
 <template>
-  <div class="gitsearch">
+  <div class="about">
+     <div v-if="loading" class="loading">
+          Loading... 
+    </div>
+     <ul class="result">
+      <li class="result-item">
+        <div class="box text-center git-result">
+            <img class="avatar" v-bind:src="repodata.owner.avatar_url.replace('?v=4', '?s=64&v=4')" height="32" width="32">
+            <div class="text-center">
+                
+                <span class="blk txt-left">
+                <a class="repo-name" :href="repodata.owner.html_url"> {{repodata.full_name}} </a><br/>
+                <small>Updated {{repodata.updated_at}}</small><br/>
+                <small><a :href="repodata.homepage">Home Page: {{repodata.homepage}}</a></small><br/>
+                <small>⭐ {{repodata.stargazers_count}}</small><br/>
+                <small class="desc">{{repodata.description}}</small><br/>
+                <small class="desc">Subscribers: {{repodata.subscribers_count}}</small><br/>
 
+                <br/>
 
+                <button @click="favorite()" class="white-btn">Add to Favorite</button>
+                </span>
+                
 
- 
-        <ul v-if="data" class="result">
-          <li v-for="item in data" :key="item+ Math.random()" class="result-item">
-            <div class="box text-center git-result">
-                <img class="avatar" v-bind:src="item.owner.avatar_url.replace('?v=4', '?s=64&v=4')" height="32" width="32">
-                <div class="text-center">
-                    
-                    <span class="blk txt-left">
-                    <a class="repo-name" :href="item.owner.html_url"> {{item.full_name}} </a>
-                    <small>Updated {{timeago(item.updated_at)}}</small>
-                    </span>
-                    <span>⭐ {{item.stargazers_count}}</span>
-                    <span class="desc">{{item.description}}</span>
+            </div>
 
-                </div>
+           </div>
+      </li>
+    </ul> 
 
-                <router-link class="view-details" :to="{name: 'Details', params: {reponame: item.full_name}   }">Details</router-link>
-              </div>
-          </li>
-        </ul> 
-
-
-
-  
   </div>
- 
 </template>
-
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
-import moment from 'moment';
-
+import gitService from '@/api/github';
 @Component
-export default class GitDisplay extends Vue {
-  @Prop()
-        data!: [];
+export default class Details extends Vue {
+  private repodata:any = {};
+  private loading: boolean = true;
+  @Prop({ required: true }) private reponame!: string
+ 
+  
 
-  timeago(timestamp: any) {
-   return moment(timestamp).fromNow();
+  // constructor() {
+  //   super()
+  //   this.details()
+  // }
+
+  created() {
+    this.details()
   }
+
+  favorite() {
+    console.log('fave')
+  }
+
+  private async details() {
+    const datum =  await gitService.details(this.reponame)
+    this.repodata = datum.data
+    this.loading = false
+  }
+
+  
 }
 </script>
 
-
-<style>
+<style scoped>
 :root {
   --link-color: #3868FC;
   --description-color: #707070;
@@ -201,61 +219,4 @@ a.repo-name{
     outline: none;
 }
 
-.small-label {
-    display: inline-block;
-    font-size: 15px;
-    font-weight: 500;
-    line-height: 18px;
-    border: 1px solid transparent;
-    border-radius: 2em;
-    padding: 0 10px;
-    line-height: 22px;
-    color: var(--tag-txt-color);
-    white-space: nowrap;
-    background-color: #f1f8ff;
-}
-
-/* pagination */
-#pagination {
-  margin: 0;
-  padding: 0;
-  text-align: center;
-  width: 500px;
-  margin: 0 auto;
-  display: block;
-  margin-bottom: 200px;
-  padding-bottom:100px;
-}
-#pagination li {
-  display: inline
-}
-#pagination li a {
-  display: inline-block;
-  text-decoration: none;
-  padding: 5px 10px;
-  color: #000
-}
-
-/* Active and Hoverable Pagination */
-#pagination li a {
-  border-radius: 5px;
-  -webkit-transition: background-color 0.3s;
-  transition: background-color 0.3s
-    
-}
-#pagination li a.active {
-  background-color: #4caf50;
-  color: #fff
-}
-#pagination li a:hover:not(.active) {
-  background-color: #ddd;
-} 
-.gitsearch {
-  margin: 0 auto;
-  display: block;
-}
-.disabled {
-  cursor: not-allowed;
-  color: gray
-}
 </style>

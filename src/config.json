@@ -1,4 +1,5 @@
 {
     "url":"https://api.github.com/search/repositories?q=",
-    "token":"c003ccf018f34ed65b7a0ff57b5ab700464c3b6f"
+    "url_detail": "https://api.github.com/repos/",
+    "token":"7ba32de682e6af6241daca68cb4d482d0a2f68d8"
 }
