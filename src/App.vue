@@ -41,7 +41,7 @@ import { sortBy } from '@/utils/sort';
 @TODO
 On click of a repository, show full details of the repository.
 
-Add sorting options based on alphabetical order, number of stars and by latest
+done-Add sorting options based on alphabetical order, number of stars and by latest
 commit.
 
 Include functionality to favorite/mark repositories using state management (Store
@@ -55,31 +55,16 @@ it on the client side.
 })
 export default class App extends Vue {
   loading: boolean = false
-  gitResults = [];
   total = 0
   list: [] = []
   listLoading = true
-
   reponame: any = "";
-  
   listQuery = {
     page: 1,
     limit: 10
   }
-  currentPage: any  = 1
-  // public sortName: string = 'stars'
-  //pagination
-  githubPage: number = 1
-  page: number = 1
-  postPerPage: number = 5
-  repos = []
-  posts: any;
 
-  lastPage: any;
-  postsPerPage: any;
-
-
-//  created() {
+//  created() { //construct
 //     this.getList()
 //   } 
 
@@ -99,12 +84,8 @@ export default class App extends Vue {
   
   sortBy(sortName: string = 'stargazers_count') {
     this.list = this.list.sort(sortBy(sortName))
-    return this.gitResults
+    return this.list
   }
-
-  public clear() {
-    return this.gitResults = [];
-  }  
 
 }
 </script>
