@@ -6,11 +6,11 @@
      <ul class="result">
       <li class="result-item">
         <div class="box text-center git-result">
-            <img class="avatar" v-bind:src="repodata.owner.avatar_url.replace('?v=4', '?s=64&v=4')" height="32" width="32">
+          <!-- <img v-if="repodata.owner? repodata.owner.avatar_url.replace('?v=4', '?s=64&v=4') :" height="32" width="32">  -->
             <div class="text-center">
                 
                 <span class="blk txt-left">
-                <a class="repo-name" :href="repodata.owner.html_url"> {{repodata.full_name}} </a><br/>
+                <!-- <a class="repo-name" :href="repodata.owner.html_url"> {{repodata.full_name}} </a><br/> -->
                 <small>Updated {{repodata.updated_at}}</small><br/>
                 <small><a :href="repodata.homepage">Home Page: {{repodata.homepage}}</a></small><br/>
                 <small>⭐ {{repodata.stargazers_count}}</small><br/>
@@ -19,7 +19,7 @@
 
                 <br/>
 
-                <button @click="favorite()" class="white-btn">Add to Favorite</button>
+                <button @click="setFavorite()" :disabled="added" class="white-btn">{{added ? 'Favorited' : 'Add to Favorite'}}</button>
                 </span>
                 
 
@@ -34,25 +34,33 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import gitService from '@/api/github';
+import store from '@/store'
+
 @Component
 export default class Details extends Vue {
   private repodata:any = {};
   private loading: boolean = true;
+  private added: boolean = false;
   @Prop({ required: true }) private reponame!: string
  
-  
-
-  // constructor() {
-  //   super()
-  //   this.details()
-  // }
 
   created() {
     this.details()
+    this.favorite()
+    this.recordReponame(this.reponame)
+  }
+
+  setFavorite() {
+    this.added = true
+    store.commit('setFavorite', this.repodata)
+  }
+
+  recordReponame(reponame: any) {
+    return store.commit('record', reponame)
   }
 
   favorite() {
-    console.log('fave')
+    return store.state.favorites
   }
 
   private async details() {
