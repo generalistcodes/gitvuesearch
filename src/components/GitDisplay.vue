@@ -1,25 +1,11 @@
 <template>
   <div class="gitsearch">
 
-        <div class="text-center">
-          <input type="text" placeholder="Search github repository." class="input-text" v-model="query" v-on:keyup="getRepositoryItems">
-        </div>
 
-        <br>
 
-        <div v-if="loading" class="loading">
-           Searching... 
-        </div>
-
-        <p class="sort-box"  v-if="query">
-          <b>Sort <small class="small-label">{{query}}</small> by : </b>
-          <button class="white-btn" @click="sortBy('-stargazers_count')">Highest stars</button>
-          <button class="white-btn" @click="sortBy('stargazers_count')">Lowest stars</button>
-          <button class="white-btn" @click="sortBy('-updated_at')">Latest</button>
-          <button class="white-btn" @click="sortBy('updated_at')">Oldest</button>
-        </p>
-        <ul v-if="gitResults" class="result">
-          <li v-for="item in gitResults" :key="item+ Math.random()" class="result-item">
+ 
+        <ul v-if="data" class="result">
+          <li v-for="item in data" :key="item+ Math.random()" class="result-item">
             <div class="box text-center git-result">
               <img class="avatar" v-bind:src="item.owner.avatar_url" height="50" width="50">
               <div class="text-center">
@@ -36,72 +22,24 @@
           </li>
         </ul> 
 
+
+
+  
   </div>
+ 
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import gitService from '../services/gitsearch.service';
+import { Component, Vue, Prop } from 'vue-property-decorator';
 import moment from 'moment';
-import { sortBy } from '../utils/sort';
-
 
 @Component
-export default class GitSearch extends Vue {
-  // @Prop() 
-  private loading: boolean = false
-  private gitResults = [];
-  public query: any = "";
-  // public sortName: string = 'stars'
-
-  getRepositoryItems() { 
-    this.clear()
-    const term = this.query
-    this.loading = true
-    return gitService.getRepo(term)
-                      .then(response => (this.gitResults = response.data.items))
-                      .catch((e)=> console.log("Error" + e))
-                      .finally(() => this.loading = false);
-  }
-
-  byStars(a: any, b: any) {
-      if (a.stargazers_count > b.stargazers_count)
-        return -1;
-      if (a.stargazers_count < b.stargazers_count)
-        return 1;
-      return 0;
-  }
-
-  byLatest(a: any, b: any) {
-    //updated_at
-      if (a.updated_at > b.updated_at || a.stargazers_count > b.stargazers_count)
-        return -1;
-      if (a.updated_at < b.updated_at || a.stargazers_count < b.stargazers_count)
-        return 1;
-      return 0;
-  }
-
-  /*
-    sorting add `-` for asc/desc
-    eg: -stargazers_count -> 9999-0
-    w/out `-`:  stargazers_count ->0-9999
-  */
-  
-  sortBy(sortName: string) {
-    this.gitResults = this.gitResults.sort(sortBy(sortName))
-    return this.gitResults
-  }
+export default class GitDisplay extends Vue {
+  @Prop()
+        data!: [];
 
   timeago(timestamp: any) {
    return moment(timestamp).fromNow();
-  }
-
-  public clear() {
-    return this.gitResults = [];
-  } 
-
-  public testthis() {
-    return true;
   }
 }
 </script>
@@ -240,9 +178,6 @@ a.repo-name{
     border-radius: 6px;
 }
 
-.loading {
-    padding: 10px;
-}
 
 .white-btn {
     background: white;
@@ -274,4 +209,77 @@ a.repo-name{
     background-color: #f1f8ff;
 }
 
+.styled-select {
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  border-radius: 3px;
+  margin: 0 auto;
+  overflow: hidden;
+  position: relative;
+}
+.styled-select, .styled-select select { width: 240px;}
+select:focus { outline: none; }
+.styled-select select {
+  height: 34px;
+  padding: 5px 0 5px 5px;
+  background: transparent;
+  border: none;
+  
+  /*hide default down arrow in webkit */
+  -webkit-appearance: none; 
+}
+
+@-moz-document url-prefix(){
+  .styled-select select { width: 110%; }
+}
+ 
+ select::-ms-expand { display: none; } /* hide default down arrow in IE10*/
+
+/* hack to fall back in opera */
+_:-o-prefocus, .selector {
+  .styled-select { background: none; }
+  }
+/* pagination */
+#pagination {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  width: 500px;
+  margin: 0 auto;
+  display: block;
+  margin-bottom: 200px;
+  padding-bottom:100px;
+}
+#pagination li {
+  display: inline
+}
+#pagination li a {
+  display: inline-block;
+  text-decoration: none;
+  padding: 5px 10px;
+  color: #000
+}
+
+/* Active and Hoverable Pagination */
+#pagination li a {
+  border-radius: 5px;
+  -webkit-transition: background-color 0.3s;
+  transition: background-color 0.3s
+    
+}
+#pagination li a.active {
+  background-color: #4caf50;
+  color: #fff
+}
+#pagination li a:hover:not(.active) {
+  background-color: #ddd;
+} 
+.gitsearch {
+  margin: 0 auto;
+  display: block;
+}
+.disabled {
+  cursor: not-allowed;
+  color: gray
+}
 </style>

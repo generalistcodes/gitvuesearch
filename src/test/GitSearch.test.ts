@@ -1,21 +1,12 @@
 import 'jest';
 import { mount, shallowMount } from '@vue/test-utils';
-import GitSearch from '@/components/GitSearch.vue';  
+import GitDisplay from '@/components/GitDisplay.vue';  
 
 describe('InputSearch', () => {
 
-    test('Testing Method', () => {
-       
-        const wrapper = mount(GitSearch)
-        expect(wrapper.vm.testthis).toBeTruthy()
-
-        console.log("how:", wrapper.vm.testthis)
-        
-      })
-
     test('returns query result', ()=>{
-        const wrapper = mount(GitSearch)
-        expect(wrapper.vm.getRepositoryItems).toBeTruthy()
+        const wrapper = mount(GitDisplay)
+        // expect(wrapper.vm.getRepositoryItems).toBeTruthy()
     })
 
 
