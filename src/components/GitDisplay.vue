@@ -7,7 +7,7 @@
         <ul v-if="data" class="result">
           <li v-for="item in data" :key="item+ Math.random()" class="result-item">
             <div class="box text-center git-result">
-              <img class="avatar" v-bind:src="item.owner.avatar_url" height="50" width="50">
+              <img class="avatar" v-bind:src="item.owner.avatar_url.replace('?v=4', '?s=64&v=4')" height="32" width="32">
               <div class="text-center">
                   
                   <span class="blk txt-left">
