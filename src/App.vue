@@ -2,7 +2,7 @@
   <div id="app">
     <img alt="Git logo" src="./assets/logo.svg">
     <div class="text-center">
-      <input type="text" placeholder="Search github repository." class="input-text" v-model="reponame" v-on:keyup="getList">
+      <input type="text" placeholder="Search github repository." class="input-text" v-model="reponame" v-on:keyup.enter="getList">
     </div>
     <br>
     <div v-if="listLoading && reponame" class="loading">
