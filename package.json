@@ -5,7 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "dist": "surge --domain vue-git-pagination-search.surge.sh"
   },
   "dependencies": {
     "@types/jest": "26.0.14",

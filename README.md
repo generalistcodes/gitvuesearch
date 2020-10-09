@@ -8,6 +8,7 @@ I originally wrote it using Vue 3, unfortunately some dependecies has incompatib
 ```
 yarn install
 ```
+## Demo [Vue Git](vue-git-pagination-search.surge.sh) - Demo Link
 
 ### Compiles and hot-reloads for development
 ```
