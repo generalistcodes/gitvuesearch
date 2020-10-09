@@ -1,4 +1,4 @@
-# Github Repository Search using vue+typescript
+# Github Repository Search using Vue+Typescript
 
 I originally wrote it using Vue 3, unfortunately some dependecies has incompatibility issues(babel, vue-template-compiler, jest) 
 
@@ -8,8 +8,10 @@ I originally wrote it using Vue 3, unfortunately some dependecies has incompatib
 ```
 yarn install
 ```
-## Demo [Vue Git](vue-git-pagination-search.surge.sh) - Demo Link
-
+## Demo [Vue Git](vue-git-pagination-search.surge.sh) - Using Surge
+```
+yarn dist
+```
 ### Compiles and hot-reloads for development
 ```
 yarn serve
@@ -31,5 +33,9 @@ yarn build
 yarn lint
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### API Limit
+Just add token in your personal github profile and update `config.json` with your own token
+
+[Kim Monzon](http://kimmonzon.com)
+
+
