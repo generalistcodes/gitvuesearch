@@ -130,6 +130,10 @@ a.repo-name{
   font-weight: bold;
   text-transform: capitalize;
   display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 500px;
+  text-overflow: ellipsis;
 }
 
 .result {
