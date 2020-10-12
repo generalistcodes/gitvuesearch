@@ -8,7 +8,14 @@
         <circle cx="11" cy="11" r="8"></circle>
         <path d="M21 21l-4.35-4.35"></path>
       </svg>
+     
     </div>
+    <div class="row"> 
+      <div class="col-sm-10"></div>
+      <div class="col-sm-2 link">
+        <router-link to="favorites">Favorites</router-link>
+      </div>
+     </div>
     <br>
     <div v-if="listLoading && reponame" class="loading">
           Searching... 
@@ -132,5 +139,9 @@ export default class Home extends Vue {
     height: 100%;
     padding: 0 12px;
     font-size: 12px;
+}
+
+.link {
+  padding-top: 10px;
 }
 </style>

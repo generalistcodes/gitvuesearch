@@ -19,6 +19,11 @@ const routes: Array<RouteConfig> = [
     component: () => import(/* webpackChunkName: "about" */ '../views/Details.vue'),
     props: true
   },
+  {
+    path: '/Favorites/',
+    name: 'Favorites',
+    component: () => import('../views/Favorites.vue')
+  },
 ];
 
 const router = new VueRouter({
