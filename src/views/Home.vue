@@ -1,8 +1,13 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-sm">
     
-    <div class="text-center">
-      <input type="text" placeholder="Search github repository and press enter." class="input-text" v-model="reponame" v-on:keyup.enter="getList">
+    <div class="search-wrapper">
+      <input type="text" placeholder="Search github repository and press enter." class="search-input" v-model="reponame" v-on:keyup.enter="getList">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="feather feather-search" viewBox="0 0 24 24">
+        <defs></defs>
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="M21 21l-4.35-4.35"></path>
+      </svg>
     </div>
     <br>
     <div v-if="listLoading && reponame" class="loading">
@@ -103,4 +108,29 @@ export default class Home extends Vue {
     padding: 10px;
 }
 
+.search-wrapper {
+  border-radius: 4px;
+    background-color: #fff;
+    padding-right: 12px;
+    height: 40px;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    align-items: center;
+    color: var(--light-font);
+    box-shadow: 0 2px 6px 0 rgba(136, 148, 171, 0.2), 0 24px 20px -24px rgba(71, 82, 107, 0.1);
+    overflow: hidden;
+}
+
+.search-input {
+      border: none;
+    -webkit-box-flex: 1;
+    flex: 1;
+    outline: none;
+    height: 100%;
+    padding: 0 12px;
+    font-size: 12px;
+}
 </style>

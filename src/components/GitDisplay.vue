@@ -157,6 +157,13 @@ a.repo-name{
     -webkit-align-items: flex-start;
     -ms-flex-align: start;
     align-items: flex-start;
+        display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: stretch;
+    width: fit-content;
+    align-items: flex-start;
 }
 
 .result-item {
@@ -251,8 +258,10 @@ a.repo-name{
   background-color: #ddd;
 } 
 .gitsearch {
-  margin: 0 auto;
-  display: block;
+margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .disabled {
   cursor: not-allowed;
