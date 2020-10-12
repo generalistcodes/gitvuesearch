@@ -14,8 +14,8 @@
                     <a class="repo-name" :href="item.owner.html_url"> {{item.full_name}} </a>
                     <small>Updated {{timeago(item.updated_at)}}</small>
                     </span>
-                    <span>⭐ {{item.stargazers_count}}</span>
-                    <span class="desc">{{item.description}}</span>
+                    <span class="blk txt-left">⭐ {{item.stargazers_count}}</span>
+                    <span class="blk txt-left desc">{{item.description}}</span>
 
                 </div>
 

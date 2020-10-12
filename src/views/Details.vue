@@ -6,11 +6,12 @@
      <ul class="result">
       <li class="result-item">
         <div class="box text-center git-result">
-          <!-- <img v-if="repodata.owner? repodata.owner.avatar_url.replace('?v=4', '?s=64&v=4') :" height="32" width="32">  -->
+                          <img class="avatar" v-bind:src="repodata.avatar" height="32" width="32">
+
             <div class="text-center">
                 
                 <span class="blk txt-left">
-                <!-- <a class="repo-name" :href="repodata.owner.html_url"> {{repodata.full_name}} </a><br/> -->
+                <a class="repo-name" :href="repodata.url"> {{repodata.full_name}} </a><br/>
                 <small>Updated {{repodata.updated_at}}</small><br/>
                 <small><a :href="repodata.homepage">Home Page: {{repodata.homepage}}</a></small><br/>
                 <small>⭐ {{repodata.stargazers_count}}</small><br/>
@@ -65,6 +66,9 @@ export default class Details extends Vue {
 
   private async details() {
     const datum =  await gitService.details(this.reponame)
+    let {html_url, avatar_url } = datum.data.owner
+    datum.data.avatar = avatar_url
+    datum.data.url = html_url
     this.repodata = datum.data
     this.loading = false
   }
